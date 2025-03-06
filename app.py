@@ -100,4 +100,4 @@ if question:
     
     with chat_container:
         with st.chat_message("assistant"):
-            st.success(response)
+            st.write(response)
