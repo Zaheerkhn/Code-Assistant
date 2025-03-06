@@ -102,13 +102,14 @@ question = st.chat_input("Type your coding question here...")
 
 if question:
     st.session_state.messages.append({"role": "user", "content": question})
-    with chat_container:
-        with st.chat_message("user"):
-            st.write(question)
+    with st.chat_message("user"):
+        st.write(question)
     
     chat_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
     
     with st.spinner("Thinking..."):
         response = chain.run(chat_history=chat_history, question=question)
         st.session_state.messages.append({"role": "assistant", "content": response})
-    st.markdown(f'<div class="response-box">{response}</div>', unsafe_allow_html=True)
+    # st.markdown(f'<div class="response-box">{response}</div>', unsafe_allow_html=True)
+    with st.chat_message("assistant"):
+        st.write(response)
