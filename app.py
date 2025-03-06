@@ -152,9 +152,9 @@ if question:
     )
     
     # Generate response with error handling
-      with st.spinner("Generating professional response..."):
+    with st.spinner("Generating professional response..."):
             response = chain.run(chat_history=chat_history, question=question)
             st.session_state.messages.append({"role": "assistant", "content": response})
     
-      with st.chat_message("assistant"):
+    with st.chat_message("assistant"):
             st.markdown(response)  # Changed from st.write to st.markdown
