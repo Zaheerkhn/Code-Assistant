@@ -22,7 +22,6 @@ def add_custom_css():
         <style>
             /* General Styles */
             body { background-color: #0e0e10; color: white; }
-
             .stTextInput > div > div > input {
                 background-color: #1a1a1d;
                 color: white;
@@ -30,34 +29,21 @@ def add_custom_css():
                 border: 1px solid #333;
                 padding: 10px;
             }
-
             .stChatMessage, .stChatMessage div {
                 background-color: #3c3f46;
                 border-radius: 3px;
                 padding: 3px;
             }
-
-            /* Fix disappearing code blocks */
-            pre, code {
-                background-color: #1a1a1d !important;
-                color: #00ff99 !important;
-                border-radius: 8px;
-                padding: 10px;
-                display: block;
-                overflow-x: auto;
-            }
-
-            /* Ensure visibility on hover */
-            .stChatMessage:hover pre, .stChatMessage:hover code {
-                background-color: #1a1a1d !important;
-                color: #00ff99 !important;
-                opacity: 1 !important;
-                transition: none !important;
+            .stButton > button {
+                background-color: #ff4757;
+                color: white;
+                border-radius: 5px;
             }
         </style>
         """,
         unsafe_allow_html=True,
     )
+
 add_custom_css()
 
 # Title Section
@@ -102,14 +88,17 @@ question = st.chat_input("Type your coding question here...")
 
 if question:
     st.session_state.messages.append({"role": "user", "content": question})
-    with st.chat_message("user"):
-        st.write(question)
+    with chat_container:
+        with st.chat_message("user"):
+            st.write(question)
     
     chat_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
     
     with st.spinner("Thinking..."):
         response = chain.run(chat_history=chat_history, question=question)
         st.session_state.messages.append({"role": "assistant", "content": response})
-    # st.markdown(f'<div class="response-box">{response}</div>', unsafe_allow_html=True)
-    with st.chat_message("assistant"):
-        st.write(response)
+    
+    with chat_container:
+        with st.chat_message("assistant"):
+            st.write(response)
+
