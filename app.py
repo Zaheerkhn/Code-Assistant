@@ -16,6 +16,7 @@ llm = ChatNVIDIA(model="meta/codellama-70b")
 st.set_page_config(page_title="AI Code Assistant", page_icon="💻", layout="wide")
 
 # Custom CSS for better UI
+# Custom CSS for better UI
 def add_custom_css():
     st.markdown(
         """
@@ -38,6 +39,27 @@ def add_custom_css():
                 background-color: #ff4757;
                 color: white;
                 border-radius: 5px;
+            }
+            
+            /* Code block styling */
+            pre {
+                background-color: #1a1a1d !important;
+                border-radius: 8px;
+                padding: 10px !important;
+                border: 1px solid #333;
+                overflow-x: auto;
+            }
+            
+            /* Hover state for code blocks */
+            pre:hover {
+                background-color: #1a1a1d !important;
+                border: 1px solid #444;
+            }
+            
+            /* Code text color */
+            code {
+                color: #f8f8f2 !important;
+                font-family: 'Courier New', monospace !important;
             }
         </style>
         """,
