@@ -111,6 +111,4 @@ if question:
     with st.spinner("Thinking..."):
         response = chain.run(chat_history=chat_history, question=question)
         st.session_state.messages.append({"role": "assistant", "content": response})
-
-    with st.chat_message("assistant"):
-        st.write(response)
+    st.markdown(f'<div class="response-box">{response}</div>', unsafe_allow_html=True)
