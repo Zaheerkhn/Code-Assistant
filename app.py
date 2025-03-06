@@ -71,7 +71,8 @@ for msg in st.session_state.messages:
 prompt_template = PromptTemplate(
     input_variables=['chat_history', 'question'],
     template="""
-    You are a helpful assistant specialized in coding. Provide simple and intuitive answers.
+    You are a helpful assistant specialized in writing code in any programming language the user wants. 
+    You always provide **fully functional code** with clear explanations.You can also explain any programming-related question in a very simple and intuitive way.
     Chat History:
     {chat_history}
     User Question: {question}
