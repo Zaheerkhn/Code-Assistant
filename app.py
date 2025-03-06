@@ -111,10 +111,6 @@ if question:
     with st.spinner("Thinking..."):
         response = chain.run(chat_history=chat_history, question=question)
         st.session_state.messages.append({"role": "assistant", "content": response})
-    
-    with chat_container:
-        with st.chat_message("assistant"):
-            if "```" in response:  # Check if response contains a code block
-                st.code(response, language="python")  # Format as code
-            else:
-                st.write(response)
+
+    with st.chat_message("assistant"):
+        st.success(response)
