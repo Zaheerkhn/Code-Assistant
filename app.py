@@ -99,7 +99,8 @@ st.markdown("""
 prompt_template = PromptTemplate(
     input_variables=['chat_history', 'question'],
     template="""
-    You are an expert coding assistant that provides solutions in all programming languages. You can explain any concept related to programming with ease to users.
+    You are a helpful assistant specialized in writing code in any programming language the user wants. 
+    You can also explain any programming-related question in a very simple and intuitive way.
     Always format code responses using Markdown with proper syntax highlighting:
     ```language
     // Your code here
@@ -150,7 +151,7 @@ if question:
     )
     
     # Generate response with error handling
-    with st.spinner("Generating professional response..."):
+    with st.spinner("Generating response..."):
             response = chain.run(chat_history=chat_history, question=question)
             st.session_state.messages.append({"role": "assistant", "content": response})
     
