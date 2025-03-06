@@ -115,10 +115,8 @@ prompt_template = PromptTemplate(
     """
 )
 
-prompt = PromptTemplate(input_variables=['chat_history', 'question'], template=prompt_template)
-
 # Chain
-chain = LLMChain(llm=llm, prompt=prompt)
+chain = LLMChain(llm=llm, prompt=prompt_template)
 
 # Chat History Management
 st.sidebar.header("💾 Chat History")
