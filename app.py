@@ -96,19 +96,26 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Prompt template with chat history
-template = """
-You are a helpful assistant specialized in writing code in any programming language the user wants. 
-You can also explain any programming-related question in a very simple and intuitive way.
+prompt_template = PromptTemplate(
+    input_variables=['chat_history', 'question'],
+    template="""
+    You are an expert coding assistant that provides solutions in all programming languages.
+    Always format code responses using Markdown with proper syntax highlighting:
+    ```language
+    // Your code here
+    ```
+    Provide clear explanations outside code blocks.
+    
+    Chat History:
+    {chat_history}
+    
+    User Question: {question}
+    
+    Assistant Response:
+    """
+)
 
-Chat History:
-{chat_history}
-
-User Question: {question}
-
-Assistant:
-"""
-
-prompt = PromptTemplate(input_variables=['chat_history', 'question'], template=template)
+prompt = PromptTemplate(input_variables=['chat_history', 'question'], template=prompt_template)
 
 # Chain
 chain = LLMChain(llm=llm, prompt=prompt)
@@ -145,15 +152,9 @@ if question:
     )
     
     # Generate response with error handling
-    with st.spinner("🔍 Analyzing and generating solution..."):
-        try:
-            response = chain.run(chat_history=chat_history, question=question)
-            st.session_state.messages.append({"role": "assistant", "content": response})
-        except Exception as e:
-            st.error(f"Error generating response: {str(e)}")
-            response = "⚠️ Sorry, I encountered an error. Please try again."
-    
-    # Display final response
-    with chat_container:
-        with st.chat_message("assistant"):
-            st.markdown(response)  # Render as markdown for code formatting
+  with st.spinner("Generating professional response..."):
+    response = chain.run(chat_history=chat_history, question=question)
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+  with st.chat_message("assistant"):
+    st.markdown(response)  # Changed from st.write to st.markdown
