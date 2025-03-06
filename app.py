@@ -15,18 +15,15 @@ llm = ChatNVIDIA(model="meta/codellama-70b")
 # Page Config
 st.set_page_config(page_title="AI Code Assistant", page_icon="💻", layout="wide")
 
-# Custom CSS for better UI
 def add_custom_css():
     st.markdown(
         """
         <style>
-            /* General Styles */
             body { 
                 background-color: #0e0e10; 
                 color: white;
             }
             
-            /* Input field styling */
             .stTextInput > div > div > input {
                 background-color: #1a1a1d;
                 color: white;
@@ -35,7 +32,6 @@ def add_custom_css():
                 padding: 10px;
             }
             
-            /* Chat message bubbles */
             .stChatMessage, .stChatMessage div {
                 background-color: #3c3f46;
                 border-radius: 8px;
@@ -43,20 +39,13 @@ def add_custom_css():
                 margin: 8px 0;
             }
             
-            /* Button styling */
             .stButton > button {
                 background-color: #ff4757;
                 color: white;
                 border-radius: 5px;
-                transition: all 0.3s ease;
             }
             
-            .stButton > button:hover {
-                background-color: #ff6b81;
-                transform: scale(1.05);
-            }
-            
-            /* Enhanced Code Block Styling */
+            /* Code block styling without hover effects */
             .stCodeBlock pre {
                 background-color: #1a1a1d !important;
                 border-radius: 8px !important;
@@ -67,38 +56,22 @@ def add_custom_css():
             
             .stCodeBlock code {
                 color: #f8f8f2 !important;
-                font-family: 'Fira Code', monospace !important;
+                font-family: 'Courier New', monospace !important;
                 font-size: 14px !important;
                 line-height: 1.6 !important;
             }
             
-            .stCodeBlock:hover pre {
-                border-color: #666 !important;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
-                transition: all 0.3s ease;
-            }
-            
-            /* Code block copy button */
             .stCodeBlock button {
                 background-color: #333 !important;
                 color: white !important;
                 border: 1px solid #666 !important;
                 border-radius: 4px !important;
-                transition: all 0.2s ease;
             }
             
             .stCodeBlock button:hover {
                 background-color: #444 !important;
-                transform: scale(1.05);
             }
             
-            /* Ensure code blocks stay visible */
-            .stCodeBlock {
-                position: relative;
-                z-index: 1;
-            }
-            
-            /* Scrollbar styling */
             ::-webkit-scrollbar {
                 width: 8px;
             }
@@ -139,9 +112,9 @@ chat_container = st.container()
 for msg in st.session_state.messages:
     with chat_container:
         with st.chat_message(msg["role"].lower()):
-            st.markdown(msg["content"])  # Changed from st.write to st.markdown
+            st.markdown(msg["content"])
 
-# Enhanced Prompt Template
+# Prompt Template
 prompt_template = PromptTemplate(
     input_variables=['chat_history', 'question'],
     template="""
@@ -150,11 +123,7 @@ prompt_template = PromptTemplate(
     ```language
     // Your code here
     ```
-    Provide clear explanations outside code blocks. Follow these rules:
-    1. Always validate code before sharing
-    2. Include brief explanations of complex logic
-    3. Suggest optimizations where possible
-    4. Mention any dependencies required
+    Provide clear explanations outside code blocks.
     
     Chat History:
     {chat_history}
@@ -175,7 +144,7 @@ if question:
     st.session_state.messages.append({"role": "user", "content": question})
     with chat_container:
         with st.chat_message("user"):
-            st.markdown(question)  # Changed from st.write to st.markdown
+            st.markdown(question)
     
     chat_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
     
@@ -189,4 +158,4 @@ if question:
     
     with chat_container:
         with st.chat_message("assistant"):
-            st.markdown(response)  # Render as Markdown for proper code formatting
+            st.markdown(response)
