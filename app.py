@@ -99,7 +99,7 @@ st.markdown("""
 prompt_template = PromptTemplate(
     input_variables=['chat_history', 'question'],
     template="""
-    You are an expert coding assistant that provides solutions in all programming languages.
+    You are an expert coding assistant that provides solutions in all programming languages. You can explain any concept related to programming with ease to users.
     Always format code responses using Markdown with proper syntax highlighting:
     ```language
     // Your code here
