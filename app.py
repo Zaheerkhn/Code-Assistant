@@ -126,6 +126,11 @@ if "messages" not in st.session_state or st.sidebar.button("🗑️ Clear Histor
         "role": "assistant", 
         "content": "Hello! I can solve any coding problem for you. What would you like me to work on today?"
     }]
+st.sidebar.warning(
+    "⚠️ Due to restrictions in the LLM, it may not generate code sometimes.\n"
+    "If this happens, please refresh the application and ask your question again."
+)
+
 
 # Display Chat Messages
 chat_container = st.container()
